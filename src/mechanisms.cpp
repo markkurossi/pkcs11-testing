@@ -3,7 +3,7 @@
 /*
  * Copyright (c) 2010 .SE (The Internet Infrastructure Foundation)
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -12,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -51,7 +51,7 @@ int showMechs(char *slot)
 	CK_RV rv;
 	CK_ULONG ulMechCount;
 
-	if (slot == NULL)       
+	if (slot == NULL)
 	{
 		fprintf(stderr, "ERROR: A slot number must be supplied. "
 			"Use --slot <number>\n");
@@ -72,7 +72,7 @@ int showMechs(char *slot)
 		return 1;
 	}
         pMechanismList = (CK_MECHANISM_TYPE_PTR)malloc(ulMechCount * sizeof(CK_MECHANISM_TYPE_PTR));
-        
+
 	// Get the mechanism list
 	rv = p11->C_GetMechanismList(slotID, pMechanismList, &ulMechCount);
 	if (rv != CKR_OK)
@@ -167,7 +167,7 @@ int testSuiteB_AES(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 
 		if (info.ulMinKeySize > 16 || info.ulMaxKeySize < 32)
 		{
-			printf("OK, but only support %i-%i bits.\n", info.ulMinKeySize * 8, info.ulMaxKeySize * 8);
+			printf("OK, but only support %lu-%lu bits.\n", info.ulMinKeySize * 8, info.ulMaxKeySize * 8);
 		}
 		else
 		{
@@ -213,7 +213,7 @@ int testSuiteB_ECDSA(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 
 		if (info.ulMinKeySize > 256 || info.ulMaxKeySize < 384)
 		{
-			printf("OK, but only support %i-%i bits\n", info.ulMinKeySize, info.ulMaxKeySize);
+			printf("OK, but only support %lu-%lu bits\n", info.ulMinKeySize, info.ulMaxKeySize);
 		}
 		else
 		{
@@ -259,7 +259,7 @@ int testSuiteB_ECDH(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 
 		if (info.ulMinKeySize > 256 || info.ulMaxKeySize < 384)
 		{
-			printf("OK, but only support %i-%i bits\n", info.ulMinKeySize, info.ulMaxKeySize);
+			printf("OK, but only support %lu-%lu bits\n", info.ulMinKeySize, info.ulMaxKeySize);
 		}
 		else
 		{
@@ -443,7 +443,7 @@ int testDNSSEC_rsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 
 	if (info.ulMaxKeySize < 4096)
 	{
-		printf("OK, but support maximum %i bits\n", info.ulMaxKeySize);
+		printf("OK, but support maximum %lu bits\n", info.ulMaxKeySize);
 	}
 	else
 	{
@@ -452,7 +452,7 @@ int testDNSSEC_rsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 
 	for (int i = 0; i < 7; i++)
 	{
-		printf("  %i bits: ", keySizes[i]);
+		printf("  %lu bits: ", keySizes[i]);
 
 		CK_ULONG keySize = keySizes[i];
 
@@ -623,7 +623,7 @@ int testDNSSEC_dsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 	{
 		if (info.ulMaxKeySize < 1024)
 		{
-			printf("OK, but support maximum %i bits\n", info.ulMaxKeySize);
+			printf("OK, but support maximum %lu bits\n", info.ulMaxKeySize);
 		}
 		else
 		{
@@ -647,7 +647,7 @@ int testDNSSEC_dsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 	{
 		if (info.ulMaxKeySize < 1024)
 		{
-			printf("OK, but support maximum %i bits\n", info.ulMaxKeySize);
+			printf("OK, but support maximum %lu bits\n", info.ulMaxKeySize);
 		}
 		else
 		{
@@ -734,11 +734,11 @@ void printMechKeySize(CK_ULONG ulMinKeySize, CK_ULONG ulMaxKeySize)
 	{
 		if (ulMaxKeySize > ulMinKeySize)
 		{
-			sprintf(buffer, "%i - %i", ulMinKeySize, ulMaxKeySize);
+			sprintf(buffer, "%lu - %lu", ulMinKeySize, ulMaxKeySize);
 		}
 		else
 		{
-			sprintf(buffer, "%i", ulMinKeySize);
+			sprintf(buffer, "%lu", ulMinKeySize);
 		}
 	}
 	printf("%-14s", buffer);
@@ -1328,7 +1328,7 @@ const char* getMechName(CK_MECHANISM_TYPE mechType)
 			break;
 	}
 
-	sprintf(buffer, "0x%08X", mechType);
+	sprintf(buffer, "0x%08lX", mechType);
 
 	return buffer;
 }
