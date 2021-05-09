@@ -78,7 +78,7 @@ rv2string(CK_RV rv)
     case CKR_ATTRIBUTE_VALUE_INVALID:
       return "CKR_ATTRIBUTE_VALUE_INVALID";
 
-#if 0
+#ifdef CKR_ACTION_PROHIBITED
     case CKR_ACTION_PROHIBITED:
       return "CKR_ACTION_PROHIBITED";
 #endif
@@ -97,7 +97,7 @@ rv2string(CK_RV rv)
       return "CKR_ENCRYPTED_DATA_INVALID";
     case CKR_ENCRYPTED_DATA_LEN_RANGE:
       return "CKR_ENCRYPTED_DATA_LEN_RANGE";
-#if 0
+#ifdef CKR_AEAD_DECRYPT_FAILED
     case CKR_AEAD_DECRYPT_FAILED:
       return "CKR_AEAD_DECRYPT_FAILED";
 #endif
@@ -226,7 +226,7 @@ rv2string(CK_RV rv)
     case CKR_DOMAIN_PARAMS_INVALID:
       return "CKR_DOMAIN_PARAMS_INVALID";
 
-#if 0
+#ifdef CKR_CURVE_NOT_SUPPORTED
     case CKR_CURVE_NOT_SUPPORTED:
       return "CKR_CURVE_NOT_SUPPORTED";
 #endif
@@ -249,29 +249,39 @@ rv2string(CK_RV rv)
     case CKR_MUTEX_NOT_LOCKED:
       return "CKR_MUTEX_NOT_LOCKED";
 
-#if 0
+#ifdef CKR_NEW_PIN_MODE
     case CKR_NEW_PIN_MODE:
       return "CKR_NEW_PIN_MODE";
+#endif
+#ifdef CKR_NEXT_OTP
     case CKR_NEXT_OTP:
       return "CKR_NEXT_OTP";
 #endif
 
-#if 0
+#ifdef CKR_EXCEEDED_MAX_ITERATIONS
     case CKR_EXCEEDED_MAX_ITERATIONS:
       return "CKR_EXCEEDED_MAX_ITERATIONS";
+#endif
+#ifdef CKR_FIPS_SELF_TEST_FAILED
     case CKR_FIPS_SELF_TEST_FAILED:
       return "CKR_FIPS_SELF_TEST_FAILED";
+#endif
+#ifdef CKR_LIBRARY_LOAD_FAILED
     case CKR_LIBRARY_LOAD_FAILED:
       return "CKR_LIBRARY_LOAD_FAILED";
+#endif
+#ifdef CKR_PIN_TOO_WEAK
     case CKR_PIN_TOO_WEAK:
       return "CKR_PIN_TOO_WEAK";
+#endif
+#ifdef CKR_PUBLIC_KEY_INVALID
     case CKR_PUBLIC_KEY_INVALID:
       return "CKR_PUBLIC_KEY_INVALID";
 #endif
 
     case CKR_FUNCTION_REJECTED:
       return "CKR_FUNCTION_REJECTED";
-#if 0
+#ifdef CKR_TOKEN_RESOURCE_EXCEEDED
     case CKR_TOKEN_RESOURCE_EXCEEDED:
       return "CKR_TOKEN_RESOURCE_EXCEEDED";
 #endif
