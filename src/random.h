@@ -1,7 +1,5 @@
-/* $Id$ */
-
 /*
- * Copyright (c) 2010 .SE (The Internet Infrastructure Foundation)
+ * Copyright (c) 2021 Markku Rossi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,39 +25,16 @@
  */
 
 /*****************************************************************************
- mechanisms.h
+ random.h
 
- Functions for mechanism tests
+ Functions for random number generation tests
  *****************************************************************************/
 
-#ifndef _PKCS11_TESTING_MECHANISMS_H
-#define _PKCS11_TESTING_MECHANISMS_H
+#ifndef _PKCS11_TESTING_RANDOM_H
+#define _PKCS11_TESTING_RANDOM_H
 
 #include "cryptoki.h"
 
-int showMechs(char *slot);
-int testDNSSEC(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
-int testSuiteB(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
+int testRandom(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
 
-// showMechs helper functions
-void printMechInfo(CK_SLOT_ID slotID, CK_MECHANISM_TYPE mechType);
-void printMechKeySize(CK_ULONG ulMinKeySize, CK_ULONG ulMaxKeySize);
-void printMechFlags(CK_FLAGS flags);
-
-// testDNSSEC helper functions
-int testDNSSEC_digest(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
-int testDNSSEC_rsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
-int testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
-int testDNSSEC_dsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
-int testDNSSEC_dsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
-
-// testSuiteB helper functions
-int testSuiteB_AES(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
-int testSuiteB_ECDSA(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
-int testSuiteB_ECDH(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
-int testSuiteB_SHA(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession);
-
-// Internal functions
-const char* getMechName(CK_MECHANISM_TYPE mechType);
-
-#endif // !_PKCS11_TESTING_MECHANISMS_H
+#endif // !_PKCS11_TESTING_RANDOM_H

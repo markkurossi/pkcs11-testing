@@ -3,7 +3,7 @@
 /*
  * Copyright (c) 2010 .SE (The Internet Infrastructure Foundation)
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -12,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -37,6 +37,7 @@
 #include "session.h"
 #include "library.h"
 #include "mechanisms.h"
+#include "random.h"
 #include "showslots.h"
 #include "publickey.h"
 #include "import.h"
@@ -67,6 +68,7 @@ void usage()
 	printf("  --test-rsapub         Test if the public information is available in the private key.\n");
 	printf("  --test-stability      Test if the HSM is stable. Creating keys and signing.\n");
 	printf("  --test-suiteb         Test if the NSA Suite B algorithms are available.\n");
+	printf("  --test-random         Test random number generation.\n");
 	printf("  -v                    Show version info.\n");
 	printf("  --version             Show version info.\n");
 	printf("[OPTIONS]\n");
@@ -97,6 +99,7 @@ enum {
 	OPT_TEST_RSAPUB,
 	OPT_TEST_STABILITY,
 	OPT_TEST_SUITEB,
+	OPT_TEST_RANDOM,
 	OPT_VERSION
 };
 
@@ -118,6 +121,7 @@ static const struct option long_options[] = {
 	{ "test-rsapub",     0, NULL, OPT_TEST_RSAPUB },
 	{ "test-stability",  0, NULL, OPT_TEST_STABILITY },
 	{ "test-suiteb",     0, NULL, OPT_TEST_SUITEB },
+	{ "test-random",     0, NULL, OPT_TEST_RANDOM },
 	{ "version",         0, NULL, OPT_VERSION },
 	{ NULL,              0, NULL, 0 }
 };
@@ -159,6 +163,7 @@ int main(int argc, char *argv[])
 			case OPT_TEST_RSAPUB:
 			case OPT_TEST_STABILITY:
 			case OPT_TEST_SUITEB:
+			case OPT_TEST_RANDOM:
 				needSession = 1;
 				action = opt;
 				break;
@@ -253,6 +258,7 @@ int main(int argc, char *argv[])
 		case OPT_TEST_ALL:
 			if (testDNSSEC(slotID, hSession)) retVal = 1;
 			if (testSuiteB(slotID, hSession)) retVal = 1;
+			if (testRandom(slotID, hSession)) retVal = 1;
 			if (testRSAPub(hSession)) retVal = 1;
 			if (testRSAImport(hSession)) retVal = 1;
 			break;
@@ -270,6 +276,9 @@ int main(int argc, char *argv[])
 			break;
 		case OPT_TEST_SUITEB:
 			retVal = testSuiteB(slotID, hSession);
+			break;
+		case OPT_TEST_RANDOM:
+			retVal = testRandom(slotID, hSession);
 			break;
 		default:
 			break;
