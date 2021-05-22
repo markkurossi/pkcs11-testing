@@ -45,6 +45,8 @@ int testRSAImport(CK_SESSION_HANDLE hSession);
 
 // Internal
 int testRSAImport_size(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hPublicKey);
-int testRSAImport_signverify(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hPublicKey, CK_OBJECT_HANDLE hPrivateKey);
+int testRSAImport_signverify(CK_SESSION_HANDLE hSession,
+                             CK_OBJECT_HANDLE hPublicKey,
+                             CK_OBJECT_HANDLE hPrivateKey);
 
 #endif // !_PKCS11_TESTING_IMPORT_H

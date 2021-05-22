@@ -41,6 +41,6 @@
 
 #include "cryptoki.h"
 
-const char* rv2string(CK_RV rv);
+const char *rv2string(CK_RV rv);
 
 #endif // !_PKCS11_TESTING_ERROR_H

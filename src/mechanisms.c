@@ -47,7 +47,8 @@
 
 extern CK_FUNCTION_LIST_PTR p11;
 
-int showMechs(char *slot)
+int
+showMechs(char *slot)
 {
   CK_MECHANISM_TYPE_PTR pMechanismList;
   CK_SLOT_ID slotID;
@@ -98,7 +99,8 @@ int showMechs(char *slot)
   return 0;
 }
 
-int testDNSSEC(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testDNSSEC(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   int retVal = 0;
@@ -117,7 +119,8 @@ int testDNSSEC(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testSuiteB(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testSuiteB(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   int retVal = 0;
@@ -134,7 +137,8 @@ int testSuiteB(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testSuiteB_AES(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testSuiteB_AES(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   CK_MECHANISM_INFO info;
@@ -181,7 +185,8 @@ int testSuiteB_AES(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testSuiteB_ECDSA(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testSuiteB_ECDSA(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   CK_MECHANISM_INFO info;
@@ -227,7 +232,8 @@ int testSuiteB_ECDSA(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testSuiteB_ECDH(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testSuiteB_ECDH(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   CK_MECHANISM_INFO info;
@@ -273,7 +279,8 @@ int testSuiteB_ECDH(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testSuiteB_SHA(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testSuiteB_SHA(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   CK_MECHANISM_INFO info;
@@ -314,7 +321,8 @@ int testSuiteB_SHA(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testDNSSEC_digest(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testDNSSEC_digest(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   CK_MECHANISM_INFO info;
@@ -389,7 +397,8 @@ int testDNSSEC_digest(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testDNSSEC_rsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testDNSSEC_rsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   CK_MECHANISM_INFO info;
@@ -399,32 +408,35 @@ int testDNSSEC_rsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   CK_MECHANISM keyGenMechanism = { CKM_RSA_PKCS_KEY_PAIR_GEN, NULL_PTR, 0};
   CK_BYTE publicExponent[] = { 1, 0, 1 };
 
-  CK_ATTRIBUTE publicKeyTemplate[] = {
-    { CKA_ENCRYPT, &ckTrue, sizeof(ckTrue) },
-    { CKA_VERIFY, &ckTrue, sizeof(ckTrue) },
-    { CKA_WRAP, &ckTrue, sizeof(ckTrue) },
-    { CKA_TOKEN, &ckTrue, sizeof(ckTrue) },
-    { CKA_MODULUS_BITS, NULL_PTR, 0 },
-    { CKA_PUBLIC_EXPONENT, &publicExponent, sizeof(publicExponent) }
-  };
-  CK_ATTRIBUTE privateKeyTemplate[] = {
-    { CKA_PRIVATE, &ckTrue, sizeof(ckTrue) },
-    { CKA_SENSITIVE, &ckTrue, sizeof(ckTrue) },
-    { CKA_DECRYPT, &ckTrue, sizeof(ckTrue) },
-    { CKA_SIGN, &ckTrue, sizeof(ckTrue) },
-    { CKA_UNWRAP, &ckTrue, sizeof(ckTrue) },
-    { CKA_TOKEN, &ckTrue, sizeof(ckTrue) }
-  };
+  CK_ATTRIBUTE publicKeyTemplate[] =
+    {
+      { CKA_ENCRYPT, &ckTrue, sizeof(ckTrue) },
+      { CKA_VERIFY, &ckTrue, sizeof(ckTrue) },
+      { CKA_WRAP, &ckTrue, sizeof(ckTrue) },
+      { CKA_TOKEN, &ckTrue, sizeof(ckTrue) },
+      { CKA_MODULUS_BITS, NULL_PTR, 0 },
+      { CKA_PUBLIC_EXPONENT, &publicExponent, sizeof(publicExponent) }
+    };
+  CK_ATTRIBUTE privateKeyTemplate[] =
+    {
+      { CKA_PRIVATE, &ckTrue, sizeof(ckTrue) },
+      { CKA_SENSITIVE, &ckTrue, sizeof(ckTrue) },
+      { CKA_DECRYPT, &ckTrue, sizeof(ckTrue) },
+      { CKA_SIGN, &ckTrue, sizeof(ckTrue) },
+      { CKA_UNWRAP, &ckTrue, sizeof(ckTrue) },
+      { CKA_TOKEN, &ckTrue, sizeof(ckTrue) }
+    };
 
-  CK_ULONG keySizes[] = {
-    512,
-    768,
-    1024,
-    1536,
-    2048,
-    3072,
-    4096
-  };
+  CK_ULONG keySizes[] =
+    {
+      512,
+      768,
+      1024,
+      1536,
+      2048,
+      3072,
+      4096
+    };
 
   printf("\nTesting RSA key generation\n");
   printf("**************************\n");
@@ -461,7 +473,10 @@ int testDNSSEC_rsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 
       publicKeyTemplate[4].pValue = &keySize;
       publicKeyTemplate[4].ulValueLen = sizeof(keySize);
-      rv = p11->C_GenerateKeyPair(hSession, &keyGenMechanism, publicKeyTemplate, 6, privateKeyTemplate, 6, &hPublicKey, &hPrivateKey);
+      rv = p11->C_GenerateKeyPair(hSession, &keyGenMechanism,
+                                  publicKeyTemplate, 6,
+                                  privateKeyTemplate, 6,
+                                  &hPublicKey, &hPrivateKey);
       if (rv != CKR_OK)
         {
           printf("Failed. rv=%s\n", rv2string(rv));
@@ -478,7 +493,8 @@ int testDNSSEC_rsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   CK_MECHANISM_INFO info;
@@ -488,38 +504,42 @@ int testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   CK_MECHANISM keyGenMechanism = { CKM_RSA_PKCS_KEY_PAIR_GEN, NULL_PTR, 0};
   CK_BYTE publicExponent[] = { 1, 0, 1 };
   CK_ULONG modulusBits = 1024;
-  CK_MECHANISM mechanism = {
-    CKM_VENDOR_DEFINED, NULL_PTR, 0
-  };
+  CK_MECHANISM mechanism =
+    {
+      CKM_VENDOR_DEFINED, NULL_PTR, 0
+    };
   CK_ULONG length;
   CK_BYTE_PTR pSignature;
   CK_BYTE data[] = {"Text"};
 
-  CK_ATTRIBUTE publicKeyTemplate[] = {
-    { CKA_ENCRYPT, &ckTrue, sizeof(ckTrue) },
-    { CKA_VERIFY, &ckTrue, sizeof(ckTrue) },
-    { CKA_WRAP, &ckTrue, sizeof(ckTrue) },
-    { CKA_TOKEN, &ckTrue, sizeof(ckTrue) },
-    { CKA_MODULUS_BITS, &modulusBits, sizeof(modulusBits) },
-    { CKA_PUBLIC_EXPONENT, &publicExponent, sizeof(publicExponent) }
-  };
-  CK_ATTRIBUTE privateKeyTemplate[] = {
-    { CKA_PRIVATE, &ckTrue, sizeof(ckTrue) },
-    { CKA_SENSITIVE, &ckTrue, sizeof(ckTrue) },
-    { CKA_DECRYPT, &ckTrue, sizeof(ckTrue) },
-    { CKA_SIGN, &ckTrue, sizeof(ckTrue) },
-    { CKA_UNWRAP, &ckTrue, sizeof(ckTrue) },
-    { CKA_TOKEN, &ckTrue, sizeof(ckTrue) }
-  };
+  CK_ATTRIBUTE publicKeyTemplate[] =
+    {
+      { CKA_ENCRYPT, &ckTrue, sizeof(ckTrue) },
+      { CKA_VERIFY, &ckTrue, sizeof(ckTrue) },
+      { CKA_WRAP, &ckTrue, sizeof(ckTrue) },
+      { CKA_TOKEN, &ckTrue, sizeof(ckTrue) },
+      { CKA_MODULUS_BITS, &modulusBits, sizeof(modulusBits) },
+      { CKA_PUBLIC_EXPONENT, &publicExponent, sizeof(publicExponent) }
+    };
+  CK_ATTRIBUTE privateKeyTemplate[] =
+    {
+      { CKA_PRIVATE, &ckTrue, sizeof(ckTrue) },
+      { CKA_SENSITIVE, &ckTrue, sizeof(ckTrue) },
+      { CKA_DECRYPT, &ckTrue, sizeof(ckTrue) },
+      { CKA_SIGN, &ckTrue, sizeof(ckTrue) },
+      { CKA_UNWRAP, &ckTrue, sizeof(ckTrue) },
+      { CKA_TOKEN, &ckTrue, sizeof(ckTrue) }
+    };
 
-  CK_MECHANISM_TYPE types[] = {
-    CKM_RSA_PKCS,
-    CKM_RSA_X_509,
-    CKM_MD5_RSA_PKCS,
-    CKM_SHA1_RSA_PKCS,
-    CKM_SHA256_RSA_PKCS,
-    CKM_SHA512_RSA_PKCS
-  };
+  CK_MECHANISM_TYPE types[] =
+    {
+      CKM_RSA_PKCS,
+      CKM_RSA_X_509,
+      CKM_MD5_RSA_PKCS,
+      CKM_SHA1_RSA_PKCS,
+      CKM_SHA256_RSA_PKCS,
+      CKM_SHA512_RSA_PKCS
+    };
 
   printf("\nTesting RSA signing\n");
   printf("*******************\n");
@@ -529,7 +549,10 @@ int testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   printf("  then digesting has to be done in the host application.\n");
   printf("  Then use the RSA only mechanisms.\n\n");
 
-  rv = p11->C_GenerateKeyPair(hSession, &keyGenMechanism, publicKeyTemplate, 6, privateKeyTemplate, 6, &hPublicKey, &hPrivateKey);
+  rv = p11->C_GenerateKeyPair(hSession, &keyGenMechanism,
+                              publicKeyTemplate, 6,
+                              privateKeyTemplate, 6,
+                              &hPublicKey, &hPrivateKey);
   if (rv != CKR_OK)
     {
       printf("Failed to generate a keypair. rv=%s\n", rv2string(rv));
@@ -558,7 +581,8 @@ int testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
       rv = p11->C_SignInit(hSession, &mechanism, hPrivateKey);
       if (rv != CKR_OK)
         {
-          printf("Available, but could not initialize signing. rv=%s\n", rv2string(rv));
+          printf("Available, but could not initialize signing. rv=%s\n",
+                 rv2string(rv));
           retVal = 1;
           continue;
         }
@@ -590,19 +614,21 @@ int testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testDNSSEC_dsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testDNSSEC_dsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   CK_MECHANISM_INFO info;
   int retVal = 0;
 
-  CK_ULONG keySizes[] = {
-    512,
-    640,
-    768,
-    896,
-    1024
-  };
+  CK_ULONG keySizes[] =
+    {
+      512,
+      640,
+      768,
+      896,
+      1024
+    };
 
   printf("\nTesting DSA key generation\n");
   printf("**************************\n");
@@ -665,7 +691,8 @@ int testDNSSEC_dsa_keygen(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testDNSSEC_dsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
+int
+testDNSSEC_dsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   CK_MECHANISM_INFO info;
@@ -707,7 +734,8 @@ int testDNSSEC_dsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-void printMechInfo(CK_SLOT_ID slotID, CK_MECHANISM_TYPE mechType)
+void
+printMechInfo(CK_SLOT_ID slotID, CK_MECHANISM_TYPE mechType)
 {
   CK_MECHANISM_INFO info;
   CK_RV rv;
@@ -720,7 +748,8 @@ void printMechInfo(CK_SLOT_ID slotID, CK_MECHANISM_TYPE mechType)
   rv = p11->C_GetMechanismInfo(slotID, mechType, &info);
   if (rv != CKR_OK)
     {
-      printf("   Could not get info about the mechanism. rv=%s\n", rv2string(rv));
+      printf("   Could not get info about the mechanism. rv=%s\n",
+             rv2string(rv));
       return;
     }
 
@@ -728,7 +757,8 @@ void printMechInfo(CK_SLOT_ID slotID, CK_MECHANISM_TYPE mechType)
   printMechFlags(info.flags);
 }
 
-void printMechKeySize(CK_ULONG ulMinKeySize, CK_ULONG ulMaxKeySize)
+void
+printMechKeySize(CK_ULONG ulMinKeySize, CK_ULONG ulMaxKeySize)
 {
   char buffer[512];
   buffer[0] = '\0';
@@ -747,9 +777,9 @@ void printMechKeySize(CK_ULONG ulMinKeySize, CK_ULONG ulMaxKeySize)
   printf("%-14s", buffer);
 }
 
-void printMechFlags(CK_FLAGS flags)
+void
+printMechFlags(CK_FLAGS flags)
 {
-
   if (flags & CKF_HW)
     {
       printf("HW ");
@@ -824,7 +854,8 @@ void printMechFlags(CK_FLAGS flags)
   printf("\n");
 }
 
-const char* getMechName(CK_MECHANISM_TYPE mechType)
+const char *
+getMechName(CK_MECHANISM_TYPE mechType)
 {
   static char buffer[20];
 

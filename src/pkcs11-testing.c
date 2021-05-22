@@ -84,54 +84,57 @@ void usage()
 }
 
 // Enumeration of the long options
-enum {
-  OPT_BATCHJOBS = 0x100,
-  OPT_HELP,
-  OPT_MODULE,
-  OPT_PIN,
-  OPT_ROLLOVERS,
-  OPT_SHOW_MECHANISMS,
-  OPT_SHOW_SLOTS,
-  OPT_SIGNATURES,
-  OPT_SLEEP,
-  OPT_SLOT,
-  OPT_TEST_ALL,
-  OPT_TEST_DNSSEC,
-  OPT_TEST_RSAIMPORT,
-  OPT_TEST_RSAPUB,
-  OPT_TEST_STABILITY,
-  OPT_TEST_SUITEB,
-  OPT_TEST_RANDOM,
-  OPT_VERSION
-};
+enum
+  {
+    OPT_BATCHJOBS = 0x100,
+    OPT_HELP,
+    OPT_MODULE,
+    OPT_PIN,
+    OPT_ROLLOVERS,
+    OPT_SHOW_MECHANISMS,
+    OPT_SHOW_SLOTS,
+    OPT_SIGNATURES,
+    OPT_SLEEP,
+    OPT_SLOT,
+    OPT_TEST_ALL,
+    OPT_TEST_DNSSEC,
+    OPT_TEST_RSAIMPORT,
+    OPT_TEST_RSAPUB,
+    OPT_TEST_STABILITY,
+    OPT_TEST_SUITEB,
+    OPT_TEST_RANDOM,
+    OPT_VERSION
+  };
 
 // Text representation of the long options
-static const struct option long_options[] = {
-  { "batchjobs",       1, NULL, OPT_BATCHJOBS },
-  { "help",            0, NULL, OPT_HELP },
-  { "module",          1, NULL, OPT_MODULE },
-  { "pin",             1, NULL, OPT_PIN },
-  { "rollovers",       1, NULL, OPT_ROLLOVERS },
-  { "show-mechanisms", 0, NULL, OPT_SHOW_MECHANISMS },
-  { "show-slots",      0, NULL, OPT_SHOW_SLOTS },
-  { "signatures",      1, NULL, OPT_SIGNATURES },
-  { "sleep",           1, NULL, OPT_SLEEP },
-  { "slot",            1, NULL, OPT_SLOT },
-  { "test-all",        0, NULL, OPT_TEST_ALL },
-  { "test-dnssec",     0, NULL, OPT_TEST_DNSSEC },
-  { "test-rsaimport",  0, NULL, OPT_TEST_RSAIMPORT },
-  { "test-rsapub",     0, NULL, OPT_TEST_RSAPUB },
-  { "test-stability",  0, NULL, OPT_TEST_STABILITY },
-  { "test-suiteb",     0, NULL, OPT_TEST_SUITEB },
-  { "test-random",     0, NULL, OPT_TEST_RANDOM },
-  { "version",         0, NULL, OPT_VERSION },
-  { NULL,              0, NULL, 0 }
-};
+static const struct option long_options[] =
+  {
+    { "batchjobs",       1, NULL, OPT_BATCHJOBS },
+    { "help",            0, NULL, OPT_HELP },
+    { "module",          1, NULL, OPT_MODULE },
+    { "pin",             1, NULL, OPT_PIN },
+    { "rollovers",       1, NULL, OPT_ROLLOVERS },
+    { "show-mechanisms", 0, NULL, OPT_SHOW_MECHANISMS },
+    { "show-slots",      0, NULL, OPT_SHOW_SLOTS },
+    { "signatures",      1, NULL, OPT_SIGNATURES },
+    { "sleep",           1, NULL, OPT_SLEEP },
+    { "slot",            1, NULL, OPT_SLOT },
+    { "test-all",        0, NULL, OPT_TEST_ALL },
+    { "test-dnssec",     0, NULL, OPT_TEST_DNSSEC },
+    { "test-rsaimport",  0, NULL, OPT_TEST_RSAIMPORT },
+    { "test-rsapub",     0, NULL, OPT_TEST_RSAPUB },
+    { "test-stability",  0, NULL, OPT_TEST_STABILITY },
+    { "test-suiteb",     0, NULL, OPT_TEST_SUITEB },
+    { "test-random",     0, NULL, OPT_TEST_RANDOM },
+    { "version",         0, NULL, OPT_VERSION },
+    { NULL,              0, NULL, 0 }
+  };
 
 CK_FUNCTION_LIST_PTR p11;
 
 // The main function
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
   int option_index = 0, opt, retVal = 0, action = 0, needSession = 0;
 

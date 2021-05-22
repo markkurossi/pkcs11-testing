@@ -46,65 +46,66 @@
 #endif
 
 // Load the PKCS#11 library
-CK_C_GetFunctionList loadLibrary(char *module, void **moduleHandle)
+CK_C_GetFunctionList
+loadLibrary(char *module, void **moduleHandle)
 {
-	if (module == NULL || moduleHandle == NULL)
-	{
-		return NULL;
-	}
+  if (module == NULL || moduleHandle == NULL)
+    {
+      return NULL;
+    }
 
-	CK_C_GetFunctionList pGetFunctionList = NULL;
+  CK_C_GetFunctionList pGetFunctionList = NULL;
 
 #if defined(HAVE_LOADLIBRARY)
-	HINSTANCE hDLL = NULL;
+  HINSTANCE hDLL = NULL;
 
-	// Load PKCS #11 library
-	HINSTANCE hDLL = LoadLibrary(_T(module));
+  // Load PKCS #11 library
+  HINSTANCE hDLL = LoadLibrary(_T(module));
 
-	if (!hDLL)
-	{
-		// Failed to load the PKCS #11 library
-		return NULL;
-	}
+  if (!hDLL)
+    {
+      // Failed to load the PKCS #11 library
+      return NULL;
+    }
 
-	// Retrieve the entry point for C_GetFunctionList
-	pGetFunctionList = (CK_C_GetFunctionList) GetProcAddress(hDLL, _T("C_GetFunctionList"));
+  // Retrieve the entry point for C_GetFunctionList
+  pGetFunctionList = (CK_C_GetFunctionList) GetProcAddress(hDLL, _T("C_GetFunctionList"));
 
 #elif defined(HAVE_DLOPEN)
-	void *pDynLib;
+  void *pDynLib;
 
-	// Load PKCS #11 library
-	pDynLib = dlopen(module, RTLD_NOW | RTLD_LOCAL);
+  // Load PKCS #11 library
+  pDynLib = dlopen(module, RTLD_NOW | RTLD_LOCAL);
 
-	if (!pDynLib)
-	{
-		// Failed to load the PKCS #11 library
-		return NULL;
-	}
+  if (!pDynLib)
+    {
+      // Failed to load the PKCS #11 library
+      return NULL;
+    }
 
-	// Retrieve the entry point for C_GetFunctionList
-	pGetFunctionList = (CK_C_GetFunctionList) dlsym(pDynLib, "C_GetFunctionList");
+  // Retrieve the entry point for C_GetFunctionList
+  pGetFunctionList = (CK_C_GetFunctionList) dlsym(pDynLib, "C_GetFunctionList");
 
-	// Store the handle so we can dlclose it later
-	*moduleHandle = pDynLib;
+  // Store the handle so we can dlclose it later
+  *moduleHandle = pDynLib;
 
 #else
-	fprintf(stderr, "ERROR: Not compiled with library support.\n");
+  fprintf(stderr, "ERROR: Not compiled with library support.\n");
 
-	return NULL;
+  return NULL;
 #endif
 
-	return pGetFunctionList;
+  return pGetFunctionList;
 }
 
 void unloadLibrary(void *moduleHandle)
 {
-	if (moduleHandle)
-	{
+  if (moduleHandle)
+    {
 #if defined(HAVE_LOADLIBRARY)
-		// no idea
+      // no idea
 #elif defined(HAVE_DLOPEN)
-		dlclose(moduleHandle);
+      dlclose(moduleHandle);
 #endif
-	}
+    }
 }
