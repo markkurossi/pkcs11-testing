@@ -10,7 +10,8 @@ are:
  - Updated coding style.
  - Added tests for:
    - Random number functions.
-   - SHA224 and SHA384 digest algorithms.
+   - SHA224 and SHA384 sign and digest algorithms.
+   - Sign{Update,Final} signing.
 
 The original authors are listed in [AUTHORS](./AUTHORS) and original
 [LICENSE](./LICENSE) applies.
