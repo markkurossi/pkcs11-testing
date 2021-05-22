@@ -540,7 +540,9 @@ testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
       CKM_RSA_X_509,
       CKM_MD5_RSA_PKCS,
       CKM_SHA1_RSA_PKCS,
+      CKM_SHA224_RSA_PKCS,
       CKM_SHA256_RSA_PKCS,
+      CKM_SHA384_RSA_PKCS,
       CKM_SHA512_RSA_PKCS
     };
 
@@ -563,7 +565,7 @@ testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
       return 1;
     }
 
-  for (int i = 0; i < 6; i++)
+  for (int i = 0; i < sizeof(types) / sizeof(types[0]); i++)
     {
       printf("  %s: ", getMechName(types[i]));
       rv = p11->C_GetMechanismInfo(slotID, types[i], &info);
@@ -593,7 +595,8 @@ testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
       rv = p11->C_Sign(hSession, data, sizeof(data)-1, NULL_PTR, &length);
       if (rv != CKR_OK)
         {
-          printf("Available, but could not check the size of the signature. rv=%s\n", rv2string(rv));
+          printf("Available, but could not check the signature size. rv=%s\n",
+                 rv2string(rv));
           retVal = 1;
           continue;
         }
@@ -603,11 +606,52 @@ testDNSSEC_rsa_sign(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
       free(pSignature);
       if (rv != CKR_OK)
         {
-          printf("Available, but could not sign the data. rv=%s\n", rv2string(rv));
+          printf("Available, but could not sign the data. rv=%s\n",
+                 rv2string(rv));
           retVal = 1;
           continue;
         }
 
+      printf("OK, multi-part: ");
+      rv = p11->C_SignInit(hSession, &mechanism, hPrivateKey);
+      if (rv != CKR_OK)
+        {
+          printf("Available, but could not initialize signing. rv=%s\n",
+                 rv2string(rv));
+          retVal = 1;
+          continue;
+        }
+
+      for (int j = 0; j < sizeof(data)-1; j++)
+        {
+          rv = p11->C_SignUpdate(hSession, data + j, 1);
+          if (rv != CKR_OK)
+            {
+              printf("Available, but could not update. rv=%s\n",
+                     rv2string(rv));
+              retVal = 1;
+              continue;
+            }
+        }
+      rv = p11->C_SignFinal(hSession, NULL_PTR, &length);
+      if (rv != CKR_OK)
+        {
+          printf("Available, but could not check the signature size. rv=%s\n",
+                 rv2string(rv));
+          retVal = 1;
+          continue;
+        }
+      pSignature = (CK_BYTE_PTR)malloc(length);
+
+      rv = p11->C_SignFinal(hSession, pSignature, &length);
+      free(pSignature);
+      if (rv != CKR_OK)
+        {
+          printf("Available, but could not sign the data. rv=%s\n",
+                 rv2string(rv));
+          retVal = 1;
+          continue;
+        }
       printf("OK\n");
     }
 
