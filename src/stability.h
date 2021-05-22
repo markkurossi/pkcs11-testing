@@ -41,11 +41,24 @@
 
 #include "cryptoki.h"
 
-int testStability(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession, int rollovers, int batchjobs, int signatures, int sleepTime);
+int testStability(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession, int rollovers,
+                  int batchjobs, int signatures, int sleepTime);
 
 // Internal
-int testStability_generate(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE *hPublicKey, CK_OBJECT_HANDLE *hPrivateKey);
-int testStability_sign(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hPrivateKey, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR *ppSignature, CK_ULONG_PTR pulSignatureLen);
-int testStability_verify(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hPublicKey, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen);
+int testStability_generate(CK_SESSION_HANDLE hSession,
+                           CK_OBJECT_HANDLE *hPublicKey,
+                           CK_OBJECT_HANDLE *hPrivateKey);
+int testStability_sign(CK_SESSION_HANDLE hSession,
+                       CK_OBJECT_HANDLE hPrivateKey,
+                       CK_BYTE_PTR pData,
+                       CK_ULONG ulDataLen,
+                       CK_BYTE_PTR *ppSignature,
+                       CK_ULONG_PTR pulSignatureLen);
+int testStability_verify(CK_SESSION_HANDLE hSession,
+                         CK_OBJECT_HANDLE hPublicKey,
+                         CK_BYTE_PTR pData,
+                         CK_ULONG ulDataLen,
+                         CK_BYTE_PTR pSignature,
+                         CK_ULONG ulSignatureLen);
 
 #endif // !_PKCS11_TESTING_STABILITY_H

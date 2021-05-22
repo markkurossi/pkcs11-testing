@@ -41,6 +41,7 @@
 
 #include "cryptoki.h"
 
-int openLogin(char *slot, char *pin, CK_SLOT_ID *slotID, CK_SESSION_HANDLE *hSession);
+int openLogin(char *slot, char *pin, CK_SLOT_ID *slotID,
+              CK_SESSION_HANDLE *hSession);
 
 #endif // !_PKCS11_TESTING_PUBLICKEY_H
