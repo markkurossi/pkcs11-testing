@@ -1,11 +1,11 @@
 
 HDRS := $(wildcard src/*.h)
-SRCS := $(wildcard src/*.cpp)
+SRCS := $(wildcard src/*.c)
 
 all: pkcs11-testing
 
 pkcs11-testing: $(HDRS) $(SRCS) config.h
-	g++ -I. -Isrc -Isrc/cryptoki_compat -o $@ $(SRCS)
+	cc -I. -Isrc -Isrc/cryptoki_compat -o $@ $(SRCS)
 
 clean:
 	rm pkcs11-testing

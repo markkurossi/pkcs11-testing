@@ -1,4 +1,8 @@
-/* $Id$ */
+/*
+ * Copyright (c) 2021 Markku Rossi.
+ *
+ * All rights reserved.
+ */
 
 /*
  * Copyright (c) 2010 .SE (The Internet Infrastructure Foundation)
@@ -27,7 +31,7 @@
  */
 
 /*****************************************************************************
- error.cpp
+ error.c
 
  Function for getting error string
 *****************************************************************************/
@@ -37,7 +41,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string>
 #include <unistd.h>
 
 

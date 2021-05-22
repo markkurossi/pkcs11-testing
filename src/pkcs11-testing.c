@@ -49,8 +49,6 @@
 #include <getopt.h>
 #include <string.h>
 #include <unistd.h>
-#include <iostream>
-#include <fstream>
 
 // Display the usage
 void usage()

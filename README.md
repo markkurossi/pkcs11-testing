@@ -6,6 +6,8 @@ are:
  - Updated build system. All GNU Autoconf and Automake related files
    were removed and replaced with a hardcoded [config.h](./config.h)
    and [GNUmakefile](./GNUmakefile) files.
+ - Converted from C++ to C.
+ - Updated coding style.
  - Added tests for:
    - Random number functions.
 
