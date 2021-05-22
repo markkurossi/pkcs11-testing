@@ -47,7 +47,8 @@
 
 extern CK_FUNCTION_LIST_PTR p11;
 
-int testRSAPub(CK_SESSION_HANDLE hSession)
+int
+testRSAPub(CK_SESSION_HANDLE hSession)
 {
   CK_RV rv;
   int retVal = 0;
@@ -56,27 +57,30 @@ int testRSAPub(CK_SESSION_HANDLE hSession)
   CK_MECHANISM keyGenMechanism = { CKM_RSA_PKCS_KEY_PAIR_GEN, NULL_PTR, 0};
   CK_BYTE publicExponent[] = { 1, 0, 1 };
   CK_ULONG modulusBits = 1024;
-  CK_MECHANISM mechanism = {
-    CKM_VENDOR_DEFINED, NULL_PTR, 0
-  };
+  CK_MECHANISM mechanism =
+    {
+      CKM_VENDOR_DEFINED, NULL_PTR, 0
+    };
   CK_OBJECT_HANDLE hPublicKey, hPrivateKey;
 
-  CK_ATTRIBUTE publicKeyTemplate[] = {
-    { CKA_ENCRYPT, &ckTrue, sizeof(ckTrue) },
-    { CKA_VERIFY, &ckTrue, sizeof(ckTrue) },
-    { CKA_WRAP, &ckTrue, sizeof(ckTrue) },
-    { CKA_TOKEN, &ckTrue, sizeof(ckTrue) },
-    { CKA_MODULUS_BITS, &modulusBits, sizeof(modulusBits) },
-    { CKA_PUBLIC_EXPONENT, &publicExponent, sizeof(publicExponent) }
-  };
-  CK_ATTRIBUTE privateKeyTemplate[] = {
-    { CKA_PRIVATE, &ckTrue, sizeof(ckTrue) },
-    { CKA_SENSITIVE, &ckTrue, sizeof(ckTrue) },
-    { CKA_DECRYPT, &ckTrue, sizeof(ckTrue) },
-    { CKA_SIGN, &ckTrue, sizeof(ckTrue) },
-    { CKA_UNWRAP, &ckTrue, sizeof(ckTrue) },
-    { CKA_TOKEN, &ckTrue, sizeof(ckTrue) }
-  };
+  CK_ATTRIBUTE publicKeyTemplate[] =
+    {
+      { CKA_ENCRYPT, &ckTrue, sizeof(ckTrue) },
+      { CKA_VERIFY, &ckTrue, sizeof(ckTrue) },
+      { CKA_WRAP, &ckTrue, sizeof(ckTrue) },
+      { CKA_TOKEN, &ckTrue, sizeof(ckTrue) },
+      { CKA_MODULUS_BITS, &modulusBits, sizeof(modulusBits) },
+      { CKA_PUBLIC_EXPONENT, &publicExponent, sizeof(publicExponent) }
+    };
+  CK_ATTRIBUTE privateKeyTemplate[] =
+    {
+      { CKA_PRIVATE, &ckTrue, sizeof(ckTrue) },
+      { CKA_SENSITIVE, &ckTrue, sizeof(ckTrue) },
+      { CKA_DECRYPT, &ckTrue, sizeof(ckTrue) },
+      { CKA_SIGN, &ckTrue, sizeof(ckTrue) },
+      { CKA_UNWRAP, &ckTrue, sizeof(ckTrue) },
+      { CKA_TOKEN, &ckTrue, sizeof(ckTrue) }
+    };
 
   printf("\n******************************************************\n");
   printf("* Test for public information in the RSA private key *\n");
@@ -90,7 +94,10 @@ int testRSAPub(CK_SESSION_HANDLE hSession)
   printf("to keep the private key. Thus saving space in the HSM.\n\n");
 
   printf("Generate a key pair: ");
-  rv = p11->C_GenerateKeyPair(hSession, &keyGenMechanism, publicKeyTemplate, 6, privateKeyTemplate, 6, &hPublicKey, &hPrivateKey);
+  rv = p11->C_GenerateKeyPair(hSession, &keyGenMechanism,
+                              publicKeyTemplate, 6,
+                              privateKeyTemplate, 6,
+                              &hPublicKey, &hPrivateKey);
   if (rv != CKR_OK)
     {
       printf("Failed to generate a keypair. rv=%s\n", rv2string(rv));
@@ -106,13 +113,16 @@ int testRSAPub(CK_SESSION_HANDLE hSession)
   return retVal;
 }
 
-int testRSAPub_keypair(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hPublicKey, CK_OBJECT_HANDLE hPrivateKey)
+int
+testRSAPub_keypair(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hPublicKey,
+                   CK_OBJECT_HANDLE hPrivateKey)
 {
   CK_RV rv;
-  CK_ATTRIBUTE pubTemplate[] = {
-    { CKA_PUBLIC_EXPONENT, NULL_PTR, 0 },
-    { CKA_MODULUS, NULL_PTR, 0 }
-  };
+  CK_ATTRIBUTE pubTemplate[] =
+    {
+      { CKA_PUBLIC_EXPONENT, NULL_PTR, 0 },
+      { CKA_MODULUS, NULL_PTR, 0 }
+    };
   CK_BYTE_PTR public_exponent1 = NULL;
   CK_BYTE_PTR public_exponent2 = NULL;
   CK_ULONG public_exponent_len1 = 0;
@@ -129,7 +139,8 @@ int testRSAPub_keypair(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hPublicKey, 
   rv = p11->C_GetAttributeValue(hSession, hPublicKey, pubTemplate,  2);
   if (rv != CKR_OK)
     {
-      printf("Failed to get the size of modulus and pubexp. rv=%s\n", rv2string(rv));
+      printf("Failed to get the size of modulus and pubexp. rv=%s\n",
+             rv2string(rv));
       return 1;
     }
 
@@ -181,7 +192,8 @@ int testRSAPub_keypair(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hPublicKey, 
     }
   if (rv != CKR_OK)
     {
-      printf("Failed to get the size of modulus and pubexp. rv=%s\n", rv2string(rv));
+      printf("Failed to get the size of modulus and pubexp. rv=%s\n",
+             rv2string(rv));
       free(public_exponent1);
       free(modulus1);
       return 1;
@@ -226,13 +238,10 @@ int testRSAPub_keypair(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hPublicKey, 
   printf("Testing if the data is equal: ");
 
   // Make sure that the information from the public and private key are equal
-  if
-    (
-     public_exponent_len1 != public_exponent_len2 ||
-     memcmp(public_exponent1, public_exponent2, public_exponent_len1) != 0 ||
-     modulus_len1 != modulus_len2 ||
-     memcmp(modulus1, modulus2, modulus_len1) != 0
-     )
+  if (public_exponent_len1 != public_exponent_len2
+      || memcmp(public_exponent1, public_exponent2, public_exponent_len1) != 0
+      || modulus_len1 != modulus_len2
+      || memcmp(modulus1, modulus2, modulus_len1) != 0)
     {
       printf("Not equal\n");
       retVal = 1;
@@ -262,7 +271,8 @@ int testRSAPub_keypair(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hPublicKey, 
   return retVal;
 }
 
-void printBinBuffer(void *pValue, unsigned long ulValueLen)
+void
+printBinBuffer(void *pValue, unsigned long ulValueLen)
 {
   char *buffer = (char*)pValue;
 
