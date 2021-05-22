@@ -334,12 +334,15 @@ testDNSSEC_digest(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
     CKM_VENDOR_DEFINED, NULL_PTR, 0
   };
 
-  CK_MECHANISM_TYPE types[] = {
-    CKM_MD5,
-    CKM_SHA_1,
-    CKM_SHA256,
-    CKM_SHA512
-  };
+  CK_MECHANISM_TYPE types[] =
+    {
+      CKM_MD5,
+      CKM_SHA_1,
+      CKM_SHA224,
+      CKM_SHA256,
+      CKM_SHA384,
+      CKM_SHA512,
+    };
 
   printf("\nTesting digesting\n");
   printf("*****************\n");
@@ -347,7 +350,7 @@ testDNSSEC_digest(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession)
   printf("  If the algorithm is not available, then digesting has to be done\n");
   printf("  in the host application. (MD5 is not recommended to use)\n\n");
 
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < sizeof(types) / sizeof(types[0]); i++)
     {
       printf("  %s: ", getMechName(types[i]));
       rv = p11->C_GetMechanismInfo(slotID, types[i], &info);
