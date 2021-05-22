@@ -1,4 +1,8 @@
-/* $Id$ */
+/*
+ * Copyright (c) 2021 Markku Rossi.
+ *
+ * All rights reserved.
+ */
 
 /*
  * Copyright (c) 2010 .SE (The Internet Infrastructure Foundation)
@@ -27,7 +31,7 @@
  */
 
 /*****************************************************************************
- pkcs11-testing.cpp
+ pkcs11-testing.c
 
  This program can be used for testing HSMs using PKCS#11.
  *****************************************************************************/
