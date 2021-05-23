@@ -50,8 +50,29 @@ extern CK_FUNCTION_LIST_PTR p11;
 int
 showSlots()
 {
+  CK_INFO info = {0};
   CK_ULONG ulSlotCount;
-  CK_RV rv = p11->C_GetSlotList(CK_FALSE, NULL_PTR, &ulSlotCount);
+  CK_RV rv;
+
+  rv = p11->C_GetInfo(&info);
+  if (rv != CKR_OK)
+    {
+      fprintf(stderr, "ERROR: Could not get Cryptoki info: %s\n",
+            rv2string(rv));
+    }
+  else
+    {
+      printf("General info:\n");
+      printf("    Cryptoki version: %i.%i\n",
+             info.cryptokiVersion.major, info.cryptokiVersion.minor);
+      printf("    Manufacturer ID:  %.*s\n", 32, info.manufacturerID);
+      printf("    Flags:            %lx\n", info.flags);
+      printf("    Description:      %.*s\n", 32, info.libraryDescription);
+      printf("    Library version:  %i.%i\n",
+             info.libraryVersion.major, info.libraryVersion.minor);
+    }
+
+  rv = p11->C_GetSlotList(CK_FALSE, NULL_PTR, &ulSlotCount);
   if (rv != CKR_OK)
     {
       fprintf(stderr, "ERROR: Could not get the number of slots. rv=%s\n",
